@@ -33,10 +33,19 @@ struct ContentView: View {
                 HStack {
                     VStack {
                         Color(red: rTarget, green: gTarget, blue: bTarget)
-                        Text("Match this color")
+                        self.showAlert ? Text("R: \(Int(rTarget * 255.0))"
+                          + "  G: \(Int(gTarget * 255.0))"
+                          + "  B: \(Int(bTarget * 255.0))")
+                          : Text("Match this color")
                     }
                     VStack {
-                        Color(red: rGuess, green: gGuess, blue: bGuess)
+                        ZStack {
+                            Color(red: rGuess, green: gGuess, blue: bGuess)
+                            Text("60")
+                                .padding(.all,5)
+                                .background(Color.white)
+                                .mask(Circle())
+                        }
                         Text("R:\(Int(rGuess*255))"
                             + " G:\(Int(gGuess*255))"
                             + " G:\(Int(bGuess*255))")
