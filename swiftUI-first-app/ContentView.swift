@@ -28,32 +28,33 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                VStack {
-                    Color(red: rTarget, green: gTarget, blue: bTarget)
-                    Text("Match this color")
+        NavigationView {
+            VStack {
+                HStack {
+                    VStack {
+                        Color(red: rTarget, green: gTarget, blue: bTarget)
+                        Text("Match this color")
+                    }
+                    VStack {
+                        Color(red: rGuess, green: gGuess, blue: bGuess)
+                        Text("R:\(Int(rGuess*255))"
+                            + " G:\(Int(gGuess*255))"
+                            + " G:\(Int(bGuess*255))")
+                    }
                 }
-                VStack {
-                    Color(red: rGuess, green: gGuess, blue: bGuess)
-                    Text("R:\(Int(rGuess*255))"
-                        + " G:\(Int(gGuess*255))"
-                        + " G:\(Int(bGuess*255))")
-                }
-            }
-            Button(action: {
-                self.showAlert = true
-            }, label: {
-                Text("Hit me!")
-            }).alert(isPresented: $showAlert, content: {
-                Alert(title: Text("Your Score"),message: Text(String(computeScore())))
-            }).padding()
-            
-            ColorSlider(value: $rGuess, textColor: .red)
-            ColorSlider(value: $gGuess, textColor: .green)
-            ColorSlider(value: $bGuess, textColor: .blue)
+                Button(action: {
+                    self.showAlert = true
+                }, label: {
+                    Text("Hit me!")
+                }).alert(isPresented: $showAlert, content: {
+                    Alert(title: Text("Your Score"),message: Text(String(computeScore())))
+                }).padding()
+                
+                ColorSlider(value: $rGuess, textColor: .red)
+                ColorSlider(value: $gGuess, textColor: .green)
+                ColorSlider(value: $bGuess, textColor: .blue)
+            }.navigationTitle("猜颜色")
         }
-        
     }
 }
 
@@ -74,6 +75,10 @@ struct ColorSlider: View {
         HStack {
             Text("0").foregroundColor(textColor)
             Slider(value: $value)
+                .background(textColor)
+                .cornerRadius(10)//background和cornerRadius顺序不能调换,会影响整个view.
+                .foregroundColor(.white)
+                .accentColor(.white)
             Text("255").foregroundColor(textColor)
         }.padding(.horizontal)
     }
